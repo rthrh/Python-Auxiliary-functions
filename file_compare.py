@@ -29,16 +29,18 @@ for filename in os.listdir(directory):
         with open(path) as f1:
             try:
                 with open(path_tc) as f2:
-                    if f1.read() == f2.read():
-                        # print ('%s = TRUE\n' % filename)
-                        truecnt += 1
-                        pass
-                    else: 
-                        print ('%s = FALSE <-------' % filename)
+                    if os.path.getsize(path_tc) != os.path.getsize(path): #if size of files is not the same
+                        print ('%s = SIZE DOES NOT MATCH <-------' % filename)
                         diff_list.append(filename)
                         falsecnt += 1
-                        # break;
-                        
+                        continue
+                    else:
+                        if f1.read() == f2.read():
+                            truecnt += 1
+                        else: 
+                            print ('%s = FALSE <-------' % filename)
+                            diff_list.append(filename)
+                            falsecnt += 1  
             except:
                 # print ('%s = NULL. SIM file does not exist!!!\n' % filename)
                 nullcnt += 1
